@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Item_Inicio" android:title="@string/item_inicio" android:icon="@drawable/ic_inicio"/>
+    <item android:id="@+id/Item_Chats" android:title="@string/item_chats" android:icon="@drawable/ic_chats"/>
+    <item android:id="@+id/Item_Vender" android:title="@string/item_vender" android:enabled="false"/>
+    <item android:id="@+id/Item_Mis_Anuncios" android:title="@string/item_mis_anuncios" android:icon="@drawable/ic_mis_anuncios"/>
+    <item android:id="@+id/Item_Cuenta" android:title="@string/item_cuenta" android:icon="@drawable/ic_cuenta"/>
+</menu>

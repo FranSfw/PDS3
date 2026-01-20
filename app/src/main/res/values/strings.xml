@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">app Compra Y Venta</string>
+    <string name="item_inicio">Inicio</string>
+    <string name="item_chats">Chats</string>
+    <string name="item_vender">Vender</string>
+    <string name="item_mis_anuncios">Anuncios</string>
+    <string name="item_cuenta">Cuenta</string>
+</resources>
