@@ -21,25 +21,26 @@
             android:layout_height="80dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/Ingresar_email"
+            android:id="@+id/Ingresar_Email"
             android:text="@string/Ingresar_email"
             android:textAllCaps="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/m_button_height"
-            app:cornerRadius="8dp" />
+            android:layout_height="60dp"
+            app:cornerRadius="8dp"/>
 
         <ImageView
             android:src="@drawable/google"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="80dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/Ingresar_google"
+            android:id="@+id/Ingresar_Google"
             android:text="@string/Ingresar_google"
             android:textAllCaps="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/m_button_height"
-            app:cornerRadius="8dp" />
+            android:layout_height="60dp"
+            app:cornerRadius="8dp"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

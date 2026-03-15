@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="ic_compra_y_venta_background">#FFFFFF</color>
+    <color name="ic_compra_y_venta_foreground_background">#FFFFFF</color>
+    <color name="ic_google_background">#FFFFFF</color>
+
+
 </resources>
