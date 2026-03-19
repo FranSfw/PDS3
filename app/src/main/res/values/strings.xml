@@ -53,6 +53,11 @@
     <string name="Et_telefono">Teléfono</string>
     <string name="Btn_actualizar">Actualizar</string>
 
+    <!--  Icono del Usuario en chats  -->
+    <string name="item_uid">Uid</string>
+    <string name="item_nombre">Nombre</string>
+    <string name="item_email">Email</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
