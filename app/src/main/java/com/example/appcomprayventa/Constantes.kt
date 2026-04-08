@@ -6,6 +6,29 @@ import java.util.Locale
 
 
 object Constantes {
+
+    const val anuncio_disponible = "Disponible"
+    const val anuncio_vendido = "Vendido"
+
+    val categorias = arrayOf(
+        "Celulares",
+        "PCs/Laptops",
+        "Electrónica y electrodomésticos",
+        "Automóviles",
+        "Consolas y videojuegos",
+        "Hogar y muebles",
+        "Belleza y cuidado personal",
+        "Libros",
+        "Deportes"
+    )
+
+    val condiciones = arrayOf(
+        "Nuevo",
+        "Usado",
+        "Renovado"
+    )
+
+
     fun ObtenerTiempoDis() : Long{
         return System.currentTimeMillis()
     }

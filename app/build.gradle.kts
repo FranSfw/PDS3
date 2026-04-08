@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.loginGoogle)
     implementation(libs.glide)
+    implementation(libs.firebaseStorage)
     implementation(libs.ccp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

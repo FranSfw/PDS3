@@ -59,6 +59,16 @@
     <string name="item_email">Email</string>
     <string name="tvSinUsuarios">No hay usuarios disponibles</string>
 
+    <!--  Crear Anuncio  -->
+    <string name="Et_marca">Marca</string>
+    <string name="Categoria">Categoría</string>
+    <string name="Condicion">Condición</string>
+    <string name="Locacion">Locación</string>
+    <string name="Et_precio">Precio</string>
+    <string name="Et_titulo">Título</string>
+    <string name="Et_descripcion">Descripción</string>
+    <string name="Btn_crear_anuncio">Crear anuncio</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

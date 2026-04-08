@@ -1,8 +1,13 @@
 package com.example.appcomprayventa
 
 import android.app.ProgressDialog
+import android.content.ContentValues
+import android.content.Intent
+import android.net.InetAddresses
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -19,12 +24,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-
 class EditarPerfil : AppCompatActivity() {
-
     private lateinit var binding: ActivityEditarPerfilBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var progressDialog: ProgressDialog
+    private var imageUri: Uri?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +37,74 @@ class EditarPerfil : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         progressDialog = ProgressDialog(this)
+
         progressDialog.setTitle("Por favor espere")
         progressDialog.setCanceledOnTouchOutside(false)
 
         cargarInfo()
 
-        binding.FABCambiarImg.setOnClickListener {
-            selec_imagen_de()
+        binding.BtnActualizar.setOnClickListener {
+            validarInfo()
         }
 
+        binding.FABCambiarImg.setOnClickListener {
+            selec_imagen_de()
+
+        }
+
+    }
+
+    private var nombres = ""
+    private var f_nac = ""
+    private var codigo = ""
+    private var telefono = ""
+
+
+    private fun validarInfo() {
+        nombres = binding.EtNombres.text.toString().trim()
+        f_nac = binding.EtFNac.text.toString().trim()
+        codigo = binding.selectorCod.selectedCountryCode.toString()
+        telefono = binding.EtTelefono.text.toString().trim()
+
+        if (nombres.isEmpty()){
+            Toast.makeText(this, "Ingrese sus nombres", Toast.LENGTH_SHORT).show()
+        }else if (f_nac.isEmpty()){
+            Toast.makeText(this, "Ingrese su fecha de nacimiento", Toast.LENGTH_SHORT).show()
+        }else if (codigo.isEmpty()){
+            Toast.makeText(this, "Seleccione un codigo", Toast.LENGTH_SHORT).show()
+        }else if (telefono.isEmpty()){
+            Toast.makeText(this, "Ingrese su numero de telefono", Toast.LENGTH_SHORT).show()
+        }else{
+            actualizarInfo()
+        }
+    }
+
+    private fun actualizarInfo() {
+        progressDialog.setMessage("Actualizando informacion")
+        progressDialog.show()
+
+        val hashMap = HashMap<String, Any>()
+        hashMap["nombres"] = "${nombres}"
+        hashMap["fecha_nac"] = "${f_nac}"
+        hashMap["codigoTelefono"] = "${codigo}"
+        hashMap["telefono"] = "${telefono}"
+
+        val ref = FirebaseDatabase.getInstance().getReference("Usuarios")
+        ref.child(firebaseAuth.uid!!)
+            .updateChildren(hashMap)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(this,
+                    "informacion actualizada",
+                    Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this,
+                    "${e.message}",
+                    Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun cargarInfo() {
@@ -55,7 +118,6 @@ class EditarPerfil : AppCompatActivity() {
                     val telefono = "${snapshot.child("telefono").value}"
                     val codTelefono = "${snapshot.child("codigoTelefono").value}"
 
-                    //Establecer los valores
                     binding.EtNombres.setText(nombres)
                     binding.EtFNac.setText(f_nac)
                     binding.EtTelefono.setText(telefono)
@@ -65,7 +127,7 @@ class EditarPerfil : AppCompatActivity() {
                             .load(imagen)
                             .placeholder(R.drawable.img_perfil)
                             .into(binding.imgPerfil)
-                    }catch(e: Exception){
+                    }catch (e: Exception){
                         Toast.makeText(this@EditarPerfil,
                             "${e.message}",
                             Toast.LENGTH_SHORT).show()
@@ -74,11 +136,12 @@ class EditarPerfil : AppCompatActivity() {
                     try {
                         val codigo = codTelefono.replace("+", "").toInt()
                         binding.selectorCod.setCountryForPhoneCode(codigo)
-                    }catch(e: Exception){
+                    }catch (e: Exception){
                         Toast.makeText(this@EditarPerfil,
                             "${e.message}",
                             Toast.LENGTH_SHORT).show()
                     }
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -91,77 +154,127 @@ class EditarPerfil : AppCompatActivity() {
         val popupMenu = PopupMenu(this, binding.FABCambiarImg)
 
         popupMenu.menu.add(Menu.NONE, 1, 1, "Camara")
-        popupMenu.menu.add(Menu.NONE, 2, 2, "Galeria")
+        popupMenu.menu.add(Menu.NONE,2,2,"Galeria")
 
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener { item ->
-            val itemId = item.itemId
+            val  itemId = item.itemId
             if (itemId == 1){
-                //camara
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-                    concederPermisoCamara.launch(arrayOf(android.Manifest.permission.CAMERA))
-                }else {
-                    concederPermisoCamara.launch(arrayOf(
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    concederPermisosCamara.launch(arrayOf(android.Manifest.permission.CAMERA))
+                }else{
+                    concederPermisosCamara.launch(arrayOf(
                         android.Manifest.permission.CAMERA,
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ))
                 }
-
-            }else if (itemId == 2){
-                //galeria
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            }else if(itemId == 2){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
                     imagenGaleria()
-                }else {
-                    concederPermisoCamara.launch(arrayOf(
+                }else{
+                    concederPermisosAlmacenamiento.launch(
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ))
+                    )
                 }
+
             }
             return@setOnMenuItemClickListener true
-
         }
 
     }
+    private val concederPermisosCamara = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()) { resultado ->
+        var concedidoTodos = true
+        for (seConcede in resultado.values){
+            concedidoTodos = concedidoTodos && seConcede
+        }
+        if (concedidoTodos){
+            imagenCamara()
+        }else{
+            Toast.makeText(
+                this,
+                "El permiso de la camara o almacenamiento se denegaron",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
-    private val concederPermisoCamara =
+    private fun imagenCamara() {
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.Images.Media.TITLE, "Titulo_imagen")
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Descripcion_imagen")
+        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        resultadoCamara_ARL.launch(intent)
+    }
+
+    private val resultadoCamara_ARL =
         registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()) { resultado ->
-            var concedidoTodos = true
-            for (seConcede in resultado.values) {
-                concedidoTodos = concedidoTodos && seConcede
-            }
+            ActivityResultContracts.StartActivityForResult()){ resultado ->
+            if(resultado.resultCode == RESULT_OK){
+                try {
+                    Glide.with(this)
+                        .load(imageUri)
+                        .placeholder(R.drawable.img_perfil)
+                        .into(binding.imgPerfil)
+                }catch (e: Exception){
 
-            if (concedidoTodos) {
-                imagenCamara()
+                }
             }else{
-                Toast.makeText(this,
-                    "No se concedieron permisos",
+                Toast.makeText(
+                    this,
+                    "La captura de imagen se canceló",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
 
-    private fun imagenCamara() {
-        TODO("Not yet implemented")
-    }
+        }
 
     private val concederPermisosAlmacenamiento =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()){ esConcedido ->
-            if (esConcedido) {
+            ActivityResultContracts.RequestPermission()) {
+                esConcedido ->
+            if(esConcedido){
                 imagenGaleria()
-            } else {
-                Toast.makeText(this,
-                    "No se concedieron permisos",
+            } else{
+                Toast.makeText(
+                    this,
+                    "El permiso de almacenamiento se denegó",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
 
     private fun imagenGaleria() {
-        TODO("Not yet implemented")
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        resultadoGaleria_ARL.launch(intent)
     }
 
+    private val resultadoGaleria_ARL =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){ resultado ->
+            if(resultado.resultCode == RESULT_OK){
+                val data = resultado.data
+                imageUri = data!!.data
+                try {
+                    Glide.with(this)
+                        .load(imageUri)
+                        .placeholder(R.drawable.img_perfil)
+                        .into(binding.imgPerfil)
+                }catch (e: Exception){
+
+                }
+
+            }else{
+                Toast.makeText(
+                    this,
+                    "La seleccion de imagen se cancelo",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 }
