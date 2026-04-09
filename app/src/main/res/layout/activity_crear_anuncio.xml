@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Anuncios.CrearAnuncio">
+    tools:context=".Anuncios.CrearAnuncio"
+    android:paddingBottom="40dp"
+    >
 
     <RelativeLayout
         android:id="@+id/RL_Imagen"

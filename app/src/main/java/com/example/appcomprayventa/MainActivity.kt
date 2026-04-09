@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appcomprayventa.Anuncios.CrearAnuncio
+import com.example.appcomprayventa.Fragmentos.FragmentChats
 import com.example.appcomprayventa.Fragmentos.FragmentInicio
 import com.example.appcomprayventa.Fragmentos.FragmentCuenta
 import com.example.appcomprayventa.Fragmentos.FragmentMisAnuncios
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun verFragmentChats(){
         binding.TituloRL.text = "Chats"
-        val fragment = FragmentCuenta()
+        val fragment = FragmentChats()
         val fragmenteTransition = supportFragmentManager.beginTransaction()
         fragmenteTransition.replace(binding.FragmentL1.id, fragment, "FragmentChats")
         fragmenteTransition.commit()
