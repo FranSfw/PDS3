@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompraYVenta">
         <activity
+            android:name=".Anuncios.DetalleAnuncio"
+            android:exported="false" />
+        <activity
             android:name=".Anuncios.CrearAnuncio"
             android:exported="false" />
         <activity
