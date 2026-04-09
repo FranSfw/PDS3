@@ -12,12 +12,30 @@
 
         <!-- Aquí podrías usar un ViewPager2 para varias imágenes, 
              por ahora usaremos la principal para simplificar -->
-        <ImageView
-            android:id="@+id/imagen_detalle"
+        <!-- Reemplaza el ImageView anterior por este bloque en activity_detalle_anuncio.xml -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_imagen_perfil" />
+            android:layout_height="300dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerImagenes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tvContadorImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="16dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="1/1"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

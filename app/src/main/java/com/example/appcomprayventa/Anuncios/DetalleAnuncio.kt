@@ -2,9 +2,12 @@ package com.example.appcomprayventa.Anuncios
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.appcomprayventa.Adaptadores.AdaptadorImagenSlider
 import com.example.appcomprayventa.Constantes
 import com.example.appcomprayventa.Modelo.ModeloAnuncio
+import com.example.appcomprayventa.Modelo.ModeloImagenSeleccionada
 import com.example.appcomprayventa.R
 import com.example.appcomprayventa.databinding.ActivityDetalleAnuncioBinding
 import com.google.firebase.database.DataSnapshot
@@ -55,23 +58,41 @@ class DetalleAnuncio : AppCompatActivity() {
             })
     }
 
+    // Dentro de DetalleAnuncio.kt
+    private lateinit var imagenSliderArrayList: ArrayList<ModeloImagenSeleccionada>
+    private lateinit var adaptadorImagenSlider: AdaptadorImagenSlider
+
     private fun cargarImagenesAnuncio() {
+        imagenSliderArrayList = ArrayList()
+
         val ref = FirebaseDatabase.getInstance().getReference("Anuncios")
-        ref.child(idAnuncio).child("Imagenes").limitToFirst(1)
+        ref.child(idAnuncio).child("Imagenes")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    imagenSliderArrayList.clear()
                     for (ds in snapshot.children) {
-                        val imagenUrl = "${ds.child("imagenUrl").value}"
-                        try {
-                            Glide.with(this@DetalleAnuncio)
-                                .load(imagenUrl)
-                                .placeholder(R.drawable.ic_imagen_perfil)
-                                .into(binding.imagenDetalle)
-                        } catch (e: Exception) {}
+                        val modelo = ds.getValue(ModeloImagenSeleccionada::class.java)
+                        if (modelo != null) {
+                            imagenSliderArrayList.add(modelo)
+                        }
                     }
+                    adaptadorImagenSlider = AdaptadorImagenSlider(this@DetalleAnuncio, imagenSliderArrayList)
+                    binding.viewPagerImagenes.adapter = adaptadorImagenSlider
+
+                    // Actualizar contador
+                    binding.tvContadorImagen.text = "1/${imagenSliderArrayList.size}"
                 }
 
                 override fun onCancelled(error: DatabaseError) {}
             })
+
+        // Detectar cuando el usuario desliza la imagen para cambiar el contador
+        binding.viewPagerImagenes.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tvContadorImagen.text = "${position + 1}/${imagenSliderArrayList.size}"
+            }
+        })
     }
 }
