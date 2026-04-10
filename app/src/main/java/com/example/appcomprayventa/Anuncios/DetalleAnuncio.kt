@@ -1,6 +1,7 @@
 package com.example.appcomprayventa.Anuncios
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -29,6 +30,10 @@ class DetalleAnuncio : AppCompatActivity() {
 
     private lateinit var comentarioArrayList: ArrayList<ModeloComentario>
     private lateinit var adaptadorComentario: AdaptadorComentario
+
+    // Variables para respuestas
+    private var idComentarioPadre = ""
+    private var esRespuesta = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,10 +132,8 @@ class DetalleAnuncio : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Anuncios").child(idAnuncio)
         ref.child("Likes").child(firebaseAuth.uid!!).get().addOnSuccessListener { snapshot ->
             if (snapshot.exists()) {
-                // Si ya existe, lo quitamos
                 ref.child("Likes").child(firebaseAuth.uid!!).removeValue()
             } else {
-                // Si no existe, lo agregamos y quitamos el dislike por si acaso
                 ref.child("Likes").child(firebaseAuth.uid!!).setValue(true)
                 ref.child("Dislikes").child(firebaseAuth.uid!!).removeValue()
             }
@@ -173,7 +176,6 @@ class DetalleAnuncio : AppCompatActivity() {
 
     private fun cargarComentarios() {
         comentarioArrayList = ArrayList()
-        // Creamos el adaptador una sola vez
         adaptadorComentario = AdaptadorComentario(this, comentarioArrayList)
         binding.rvComentarios.adapter = adaptadorComentario
 
@@ -182,19 +184,41 @@ class DetalleAnuncio : AppCompatActivity() {
 
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                comentarioArrayList.clear() // Limpiamos para no duplicar
+                comentarioArrayList.clear()
+                val listaTemporal = ArrayList<ModeloComentario>()
+                
+                // Primero obtenemos todos los comentarios
                 for (ds in snapshot.children) {
                     val modelo = ds.getValue(ModeloComentario::class.java)
                     if (modelo != null) {
-                        comentarioArrayList.add(modelo)
+                        listaTemporal.add(modelo)
                     }
                 }
-                // ESTA LÍNEA es la que avisa al RecyclerView que ya tiene los 3 comentarios
+
+                // Organizamos para que las respuestas estén debajo de sus padres
+                val listaOrganizada = ArrayList<ModeloComentario>()
+                val comentariosPadre = listaTemporal.filter { !it.esRespuesta }
+                
+                for (padre in comentariosPadre) {
+                    listaOrganizada.add(padre)
+                    // Buscamos respuestas de este padre
+                    val respuestas = listaTemporal.filter { it.esRespuesta && it.idPadre == padre.id }
+                    listaOrganizada.addAll(respuestas)
+                }
+
+                comentarioArrayList.addAll(listaOrganizada)
                 adaptadorComentario.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {}
         })
+    }
+
+    fun prepararRespuesta(idPadre: String, nombrePadre: String) {
+        idComentarioPadre = idPadre
+        esRespuesta = true
+        binding.etComentario.hint = "Respondiendo a $nombrePadre..."
+        binding.etComentario.requestFocus()
     }
 
     private fun validarComentario() {
@@ -213,12 +237,23 @@ class DetalleAnuncio : AppCompatActivity() {
             val tiempo = Constantes.ObtenerTiempoDis()
             val idComentario = "${System.currentTimeMillis()}"
 
-            val modeloComentario = ModeloComentario(idComentario, firebaseAuth.uid!!, nombre, comentario, tiempo)
+            val modeloComentario = ModeloComentario(
+                idComentario, 
+                firebaseAuth.uid!!, 
+                nombre, 
+                comentario, 
+                tiempo,
+                esRespuesta,
+                idComentarioPadre
+            )
 
             val refAnuncio = FirebaseDatabase.getInstance().getReference("Anuncios")
             refAnuncio.child(idAnuncio).child("Comentarios").child(idComentario).setValue(modeloComentario)
                 .addOnSuccessListener {
                     binding.etComentario.setText("")
+                    binding.etComentario.hint = "Escribe un comentario..."
+                    esRespuesta = false
+                    idComentarioPadre = ""
                     Toast.makeText(this, "Comentario enviado", Toast.LENGTH_SHORT).show()
                 }
         }
