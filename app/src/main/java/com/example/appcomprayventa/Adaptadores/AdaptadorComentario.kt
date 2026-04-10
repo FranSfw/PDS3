@@ -15,29 +15,20 @@ class AdaptadorComentario(
 ) : RecyclerView.Adapter<AdaptadorComentario.HolderComentario>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderComentario {
+        // CORRECCIÓN: Usar LayoutInflater directamente sin guardar el binding en la clase
         val binding = ItemComentarioBinding.inflate(LayoutInflater.from(context), parent, false)
-        return HolderComentario(binding.root)
+        return HolderComentario(binding)
     }
 
     override fun onBindViewHolder(holder: HolderComentario, position: Int) {
         val modelo = comentarioArrayList[position]
-        val nombre = modelo.nombre
-        val comentario = modelo.comentario
-        val tiempo = modelo.tiempo
-
-        val fecha = Constantes.ObtenerFecha(tiempo)
-
-        holder.nombreTv.text = nombre
-        holder.comentarioTv.text = comentario
-        holder.fechaTv.text = fecha
+        
+        holder.binding.nombreTv.text = modelo.nombre
+        holder.binding.comentarioTv.text = modelo.comentario
+        holder.binding.fechaTv.text = Constantes.ObtenerFecha(modelo.tiempo)
     }
 
     override fun getItemCount(): Int = comentarioArrayList.size
 
-    inner class HolderComentario(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val binding = ItemComentarioBinding.bind(itemView)
-        val nombreTv = binding.nombreTv
-        val fechaTv = binding.fechaTv
-        val comentarioTv = binding.comentarioTv
-    }
+    inner class HolderComentario(val binding: ItemComentarioBinding) : RecyclerView.ViewHolder(binding.root)
 }

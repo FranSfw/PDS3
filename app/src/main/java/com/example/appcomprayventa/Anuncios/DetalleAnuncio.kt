@@ -173,17 +173,26 @@ class DetalleAnuncio : AppCompatActivity() {
 
     private fun cargarComentarios() {
         comentarioArrayList = ArrayList()
-        val ref = FirebaseDatabase.getInstance().getReference("Anuncios").child(idAnuncio).child("Comentarios")
+        // Creamos el adaptador una sola vez
+        adaptadorComentario = AdaptadorComentario(this, comentarioArrayList)
+        binding.rvComentarios.adapter = adaptadorComentario
+
+        val ref = FirebaseDatabase.getInstance().getReference("Anuncios")
+            .child(idAnuncio).child("Comentarios")
+
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                comentarioArrayList.clear()
+                comentarioArrayList.clear() // Limpiamos para no duplicar
                 for (ds in snapshot.children) {
                     val modelo = ds.getValue(ModeloComentario::class.java)
-                    if (modelo != null) comentarioArrayList.add(modelo)
+                    if (modelo != null) {
+                        comentarioArrayList.add(modelo)
+                    }
                 }
-                adaptadorComentario = AdaptadorComentario(this@DetalleAnuncio, comentarioArrayList)
-                binding.rvComentarios.adapter = adaptadorComentario
+                // ESTA LÍNEA es la que avisa al RecyclerView que ya tiene los 3 comentarios
+                adaptadorComentario.notifyDataSetChanged()
             }
+
             override fun onCancelled(error: DatabaseError) {}
         })
     }

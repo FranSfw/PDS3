@@ -10,9 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Aquí podrías usar un ViewPager2 para varias imágenes, 
-             por ahora usaremos la principal para simplificar -->
-        <!-- Reemplaza el ImageView anterior por este bloque en activity_detalle_anuncio.xml -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="300dp">
@@ -31,6 +28,7 @@
                 android:layout_margin="16dp"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
+                android:background="@drawable/shape_contador_fondo"
                 android:text="1/1"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -117,6 +115,7 @@
                 android:text="Marca: " />
 
         </LinearLayout>
+
         <!-- Sección de Likes y Dislikes -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -151,25 +150,28 @@
                 android:text="0" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
         <!-- Sección de Comentarios -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Comentarios"
             android:textStyle="bold"
+            android:textSize="16sp"
             android:padding="16dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvComentarios"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false" />
-
+        <!-- Input de nuevo comentario AHORA ARRIBA de la lista -->
         <LinearLayout
+            android:id="@+id/layoutComentar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp">
 
             <EditText
                 android:id="@+id/etComentario"
@@ -185,6 +187,17 @@
                 android:src="@drawable/ic_enviar"
                 android:background="?attr/selectableItemBackgroundBorderless" />
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvComentarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+        <View android:layout_width="match_parent" android:layout_height="20dp"/>
+
     </LinearLayout>
 
 </ScrollView>
