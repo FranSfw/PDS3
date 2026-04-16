@@ -1,5 +1,4 @@
 package com.example.appcomprayventa.Adaptadores
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,22 +7,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.appcomprayventa.Modelos.Usuario
 import com.example.appcomprayventa.R
+import com.example.appcomprayventa.Modelos.Usuario
 
-class AdaptadorUsuario(context: Context, listaUsuarios: ArrayList<Usuario>)
-    : RecyclerView.Adapter<AdaptadorUsuario.ViewHolder?>(){
+class AdaptadorUsuario (contexto: Context, listaUsuarios: List<Usuario>)
+    : RecyclerView.Adapter<AdaptadorUsuario.ViewHolder?>() {
 
-    private val contexto : Context
-    private val listaUsuarios : List<Usuario>
+    private val context: Context
+
+    private val listaUsuarios: List<Usuario>
 
     init {
-        this.contexto = context
+        this.context = contexto
         this.listaUsuarios = listaUsuarios
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdaptadorUsuario.ViewHolder {
-        val view : View = LayoutInflater.from(contexto).inflate(R.layout.item_usuario, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_usuario, parent, false)
         return ViewHolder(view)
     }
 
@@ -32,18 +32,18 @@ class AdaptadorUsuario(context: Context, listaUsuarios: ArrayList<Usuario>)
     }
 
     override fun onBindViewHolder(holder: AdaptadorUsuario.ViewHolder, position: Int) {
-        val usuario = listaUsuarios[position]
+        val usuario: Usuario = listaUsuarios[position]
         holder.uid.text = usuario.uid
         holder.nombre.text = usuario.nombres
         holder.email.text = usuario.email
-        Glide.with(contexto).load(usuario.imagen).placeholder(R.drawable.ic_imagen_perfil).into(holder.imagen)
+        Glide.with(context).load(usuario.imagen).placeholder(R.drawable.img_perfil).into(holder.imagen)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var uid : TextView
-        var nombre : TextView
-        var email : TextView
-        var imagen : ImageView
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var uid: TextView
+        var nombre: TextView
+        var email: TextView
+        var imagen: ImageView
 
         init {
             uid = itemView.findViewById(R.id.item_uid)
@@ -52,6 +52,4 @@ class AdaptadorUsuario(context: Context, listaUsuarios: ArrayList<Usuario>)
             imagen = itemView.findViewById(R.id.item_imagen)
         }
     }
-
-
 }
