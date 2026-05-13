@@ -1,30 +1,29 @@
 <resources>
-    <string name="app_name">app Compra Y Venta</string>
+    <string name="app_name">App Compra y Venta</string>
 
     <string name="default_web_cliente_id">177867677172-62apgbd7jqioe6thdn2i59mrakafja5g.apps.googleusercontent.com</string>
 
-    <string name="item_inicio">Inicio</string>
-    <string name="item_chats">Chats</string>
-    <string name="item_vender">Vender</string>
-    <string name="item_mis_anuncios">Anuncios</string>
-    <string name="item_cuenta">Cuenta</string>
+    <string name="Item_Inicio">Inicio</string>
+    <string name="Item_Chats">Chats</string>
+    <string name="Item_vender">Vender</string>
+    <string name="Item_Mis_Anuncios">Mis Anuncios</string>
+    <string name="Item_Cuenta">Cuenta</string>
+
     <string name="TituloRL">Titulo</string>
 
-    <string name="Ingresar_email">Ingresar email</string>
+    <string name="Ingresar_email">Ingresar con Email</string>
     <string name="Ingresar_google">Ingresar con Google</string>
 
     <string name="Txt_login">Login de usuario</string>
     <string name="Et_email">Email</string>
-    <string name="Et_password">Password</string>
+    <string name="Et_password">Contraseña</string>
     <string name="Btn_ingresar">Ingresar</string>
-    <string name="Txt_no_cuenta">No tienes una cuenta?</string>
+    <string name="Txt_no_cuenta">¿No tienes una cuenta?</string>
     <string name="Txt_registrarme">REGISTRARME</string>
 
     <string name="Txt_registro">Registro de usuario</string>
     <string name="Et_r_password">Repetir contraseña</string>
     <string name="Btn_registrar">Registrar</string>
-
-    <string name="Btn_cerrar_sesion">Cerrar sesión</string>
 
     <!-- Perfil de usuario -->
     <string name="Txt_perfil">Perfil de usuario</string>
@@ -44,23 +43,17 @@
 
     <string name="TxtOpciones">Opciones</string>
     <string name="Btn_editar_perfil">Editar perfil</string>
+    <string name="Btn_cerrar_sesion">Cerrar sesión</string>
 
-    <!--  Editar Perfil  -->
+    <!-- Editar Perfil -->
     <string name="Txt_editar_perfil">Editar perfil</string>
-    <string name="Et_nombres">Nombres completos</string>
+    <string name="Et_nombres">Nombres Completos</string>
     <string name="Et_f_nac">Fecha de nac.</string>
-    <string name="Cod_tef">+00</string>
+    <string name="Et_cod_tel">+00</string>
     <string name="Et_telefono">Teléfono</string>
-    <string name="Btn_actualizar">Actualizar</string>
+    <string name="Btn_aztualizar">Actualizar</string>
 
-    <!--  Icono del Usuario en chats  -->
-    <string name="item_uid">Uid</string>
-    <string name="item_nombre">Nombre</string>
-    <string name="item_email">Email</string>
-    <string name="tvSinUsuarios">No hay usuarios disponibles</string>
-    <string name="Et_buscar_usuario">Buscar usuario</string>
-
-    <!--  Crear Anuncio  -->
+    <!-- Crear Perfil -->
     <string name="Et_marca">Marca</string>
     <string name="Categoria">Categoría</string>
     <string name="Condicion">Condición</string>
@@ -70,11 +63,20 @@
     <string name="Et_descripcion">Descripción</string>
     <string name="Btn_crear_anuncio">Crear anuncio</string>
 
-    <!-- Chat -->
+    <!-- Ícono del usuario en chats -->
+    <string name="item_uid">Uid</string>
+    <string name="item_nombre">Nombre</string>
+    <string name="item_email">Email</string>
+
+    <!-- Buscra usuario -->
+    <string name="tvSinUsuarios">No hay usuarios disponibles</string>
+    <string name="Et_buscar_usuario">Buscar usuario</string>
+
+    <!-- Mensajes -->
     <string name="Txt_nombre_usuario">Nombres</string>
-    <string name="Et_mensaje_chat">Escriba algo</string>
+    <string name="Et_mensaje_chat">Escribe un mensaje</string>
     <string name="Tv_tiempo_mensaje">dd/MM/yyyy hh:mm</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Visualizador -->
+    <string name="BtnCerrarVisualizador">Cerrar</string>
 </resources>

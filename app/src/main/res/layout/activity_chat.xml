@@ -6,16 +6,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Chat.ChatActivity">
+    tools:context=".chat.ChatActivity">
 
-    <!-- Menú superior -->
     <RelativeLayout
         android:id="@+id/ToolbarRLChat"
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
         <ImageButton
-            android:id="@+id/Ib_Regresar"
+            android:id="@+id/IbRegresar"
             android:layout_centerVertical="true"
             android:padding="10dp"
             android:background="@android:color/transparent"
@@ -31,7 +30,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_imagen_perfil"
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"/>
 
         <TextView
             android:id="@+id/Txt_nombre_usuario"
@@ -39,14 +38,13 @@
             android:layout_centerInParent="true"
             android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <View
             android:background="#ccc"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
+            android:layout_height="1dp"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -57,9 +55,8 @@
         android:padding="5dp"
         tools:listitem="@layout/item_chat_izquierdo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
-    <!-- Menú inferior -->
     <RelativeLayout
         android:id="@+id/RLMensaje"
         android:layout_alignParentBottom="true"
@@ -75,28 +72,28 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/adjuntarFAB"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/adjuntarFAB"
             android:layout_centerVertical="true"
-            android:fabSize="mini"
+            app:fabSize="mini"
             android:elevation="0dp"
             android:layout_toStartOf="@+id/enviarFAB"
             android:layout_marginEnd="7dp"
-            android:src="@drawable/ic_imagen"
+            android:src="@drawable/ic_selec_imagen"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/enviarFAB"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:fabSize="mini"
-            android:elevation="0dp"
+            app:fabSize="mini"
             android:src="@drawable/ic_enviar_chat"
+            android:elevation="0dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 
@@ -105,6 +102,6 @@
         android:background="#ccc"
         android:layout_above="@id/RLMensaje"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"/>
 
 </RelativeLayout>

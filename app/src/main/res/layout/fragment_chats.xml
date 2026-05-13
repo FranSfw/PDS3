@@ -6,27 +6,26 @@
     tools:context=".Fragmentos.FragmentChats">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_buscar_usuario"
+        android:id="@+id/TILBuscarUsuario"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/Et_buscar_usuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapWords"
+            android:hint="@string/Et_buscar_usuario"
             android:layout_marginHorizontal="5dp"
-            android:hint="@string/Et_buscar_usuario"/>
+            android:inputType="textCapWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RV_usuarios"
+        android:layout_below="@+id/TILBuscarUsuario"
         android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/TIL_buscar_usuario"
-        android:layout_marginTop="5dp"/>
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/tvSinUsuarios"
