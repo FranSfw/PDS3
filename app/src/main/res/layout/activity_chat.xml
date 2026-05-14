@@ -79,9 +79,20 @@
             android:layout_centerVertical="true"
             app:fabSize="mini"
             android:elevation="0dp"
-            android:layout_toStartOf="@+id/enviarFAB"
+            android:layout_toStartOf="@+id/micFAB"
             android:layout_marginEnd="7dp"
             android:src="@drawable/ic_selec_imagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/micFAB"
+            android:layout_centerVertical="true"
+            app:fabSize="mini"
+            android:elevation="0dp"
+            android:layout_toStartOf="@+id/enviarFAB"
+            android:layout_marginEnd="7dp"
+            android:src="@drawable/ic_mensaje_voz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

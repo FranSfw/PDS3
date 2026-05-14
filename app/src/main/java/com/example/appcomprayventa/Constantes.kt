@@ -10,6 +10,7 @@ object Constantes {
 
     const val MENSAJE_TIPO_TEXTO = "TEXTO"
     const val MENSAJE_TIPO_IMAGEN = "IMAGEN"
+    const val MENSAJE_TIPO_AUDIO = "AUDIO"
 
     const val anuncio_disponible = "Disponible"
     const val anuncio_vendido = "Vendido"
